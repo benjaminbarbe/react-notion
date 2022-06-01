@@ -307,11 +307,6 @@ export const Block: React.FC<Block> = props => {
         return (
           <figure
             className="notion-asset-wrapper"
-            style={
-              value.format !== undefined
-                ? { width: value.format.block_width }
-                : undefined
-            }
           >
             <Asset block={block} mapImageUrl={mapImageUrl} />
 
@@ -536,6 +531,7 @@ export const Block: React.FC<Block> = props => {
       <CustomComponent
         renderComponent={renderComponent}
         blockMap={blockMap}
+        // @ts-ignore
         blockValue={blockValue as BlockValueProp<typeof blockValue.type>}
         level={level}
       >

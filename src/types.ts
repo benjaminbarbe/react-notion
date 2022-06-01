@@ -124,6 +124,12 @@ interface BookmarkValueType extends BaseValueType {
   };
 }
 
+export type ThumbnailValueType = {
+  src: string;
+  width: number;
+  height: number;
+}
+
 interface TextValueType extends BaseTextValueType {
   type: "text";
 }
