@@ -334,7 +334,7 @@ export const Block: React.FC<Block> = props => {
       case "column_list":
         return <div className="notion-row">{children}</div>;
       case "column":
-        const spacerWith = 46;
+        const spacerWith = 44;
         const ratio = blockValue.format.column_ratio;
         const columns = Number((1 / ratio).toFixed(0));
         const spacerTotalWith = (columns - 1) * spacerWith;
@@ -344,7 +344,6 @@ export const Block: React.FC<Block> = props => {
             <div className="notion-column" style={{ width }}>
               {children}
             </div>
-            <div className="notion-spacer" style={{ width: spacerWith }} />
           </>
         );
       case "quote":
