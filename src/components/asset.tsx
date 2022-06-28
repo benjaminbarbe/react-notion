@@ -17,15 +17,21 @@ const Asset: React.FC<{
 
   const format = value.format;
   const {
-    display_source = undefined,
     block_aspect_ratio = undefined,
     block_height = 1,
     block_width = 1
+  } = format ?? {};
+  let {
+    display_source = undefined,
   } = format ?? {};
 
   const aspectRatio = block_aspect_ratio || block_height / block_width;
 
   if (type === "embed" || type === "video" || type === "figma") {
+    if (display_source && display_source?.indexOf("&cc_load_policy=1") !== -1) {
+      display_source = display_source.replace("&cc_load_policy=1", "&hl=fr&cc_lang_pref=fr&cc_load_policy=1");
+    }
+
     return (
       <iframe
         className="notion-image-inset"
