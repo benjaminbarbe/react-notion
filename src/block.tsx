@@ -6,6 +6,7 @@ import {
   BlockMapType,
   MapPageUrl,
   MapImageUrl,
+  MapPictureUrl,
   CustomBlockComponents,
   BlockValueProp,
   CustomDecoratorComponents,
@@ -89,6 +90,7 @@ interface Block {
   blockMap: BlockMapType;
   mapPageUrl: MapPageUrl;
   mapImageUrl: MapImageUrl;
+  mapPictureUrl?: MapPictureUrl;
 
   fullPage?: boolean;
   hideHeader?: boolean;
@@ -106,6 +108,7 @@ export const Block: React.FC<Block> = props => {
     blockMap,
     mapPageUrl,
     mapImageUrl,
+    mapPictureUrl,
     customBlockComponents,
     customDecoratorComponents
   } = props;
@@ -308,7 +311,7 @@ export const Block: React.FC<Block> = props => {
           <figure
             className="notion-asset-wrapper"
           >
-            <Asset block={block} mapImageUrl={mapImageUrl} />
+            <Asset block={block} mapImageUrl={mapImageUrl} mapPictureUrl={mapPictureUrl} />
 
             {value.properties.caption && (
               <figcaption className="notion-image-caption">

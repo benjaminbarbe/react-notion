@@ -203,6 +203,7 @@ export interface ContentValueType extends BaseValueType {
   properties: {
     source: string[][];
     caption?: DecorationType[];
+    title?: DecorationType[];
   };
   format?: {
     block_width: number;
@@ -347,6 +348,7 @@ export interface LoadPageChunkData {
 
 export type MapPageUrl = (pageId: string) => string;
 export type MapImageUrl = (image: string, block?: BlockType) => string;
+export type MapPictureUrl = (image: string, block?: BlockType) => any;
 
 export type BlockValueProp<T> = Extract<BlockValueType, { type: T }>;
 

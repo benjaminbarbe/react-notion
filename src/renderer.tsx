@@ -3,6 +3,7 @@ import {
   BlockMapType,
   MapPageUrl,
   MapImageUrl,
+  MapPictureUrl,
   CustomBlockComponents,
   CustomDecoratorComponents
 } from "./types";
@@ -15,6 +16,7 @@ export interface NotionRendererProps {
   hideHeader?: boolean;
   mapPageUrl?: MapPageUrl;
   mapImageUrl?: MapImageUrl;
+  mapPictureUrl?: MapPictureUrl;
 
   currentId?: string;
   level?: number;
@@ -27,6 +29,7 @@ export const NotionRenderer: React.FC<NotionRendererProps> = ({
   currentId,
   mapPageUrl = defaultMapPageUrl,
   mapImageUrl = defaultMapImageUrl,
+  mapPictureUrl,
   ...props
 }) => {
   const { blockMap } = props;
@@ -47,6 +50,7 @@ export const NotionRenderer: React.FC<NotionRendererProps> = ({
       block={currentBlock}
       mapPageUrl={mapPageUrl}
       mapImageUrl={mapImageUrl}
+      mapPictureUrl={mapPictureUrl}
       {...props}
     >
       {currentBlock?.value?.content?.map(contentId => (
@@ -56,6 +60,7 @@ export const NotionRenderer: React.FC<NotionRendererProps> = ({
           level={level + 1}
           mapPageUrl={mapPageUrl}
           mapImageUrl={mapImageUrl}
+          mapPictureUrl={mapPictureUrl}
           {...props}
         />
       ))}

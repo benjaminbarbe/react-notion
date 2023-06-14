@@ -1,5 +1,5 @@
 import * as React from "react";
-import { ThumbnailValueType, BlockType, ContentValueType, MapImageUrl } from "../types";
+import { ThumbnailValueType, BlockType, ContentValueType, MapImageUrl, MapPictureUrl } from "../types";
 
 const types = ["video", "image", "embed", "figma"];
 const reponsiveWidth = [213, 320, 640, 768, 1024, 1366, 1600, 1920, 2560];
@@ -7,7 +7,8 @@ const reponsiveWidth = [213, 320, 640, 768, 1024, 1366, 1600, 1920, 2560];
 const Asset: React.FC<{
   block: BlockType;
   mapImageUrl: MapImageUrl;
-}> = ({ block, mapImageUrl }) => {
+  mapPictureUrl?: MapPictureUrl;
+}> = ({ block, mapImageUrl, mapPictureUrl }) => {
   const value = block.value as ContentValueType;
   const type = block.value.type;
 
@@ -43,15 +44,44 @@ const Asset: React.FC<{
   }
 
   if (block.value.type === "image") {
-    const src = mapImageUrl(value.properties.source[0][0], block);
     const caption = value.properties.caption?.[0][0];
+    const title = value.properties.title?.[0][0];
     const style: any = {};
-
-    let thumbnails: ThumbnailValueType[] = [];
 
     if (block_aspect_ratio) {
       style["aspectRatio"] = `${1 / aspectRatio}`;
     }
+
+    if (mapPictureUrl) {
+      const [coverUrl, coverSrcSets, coverStyles] = mapPictureUrl(value.properties.source[0][0], block);
+
+      if (coverUrl) {
+        Object.assign(style, coverStyles);
+
+        return (
+          <picture>
+            {coverSrcSets.map((src: any) => (
+              <source
+                key={src.type}
+                srcSet={src.srcSet}
+                type={src.type}
+                sizes="(min-width: 1280px) 40vw, (min-width: 1024px) 60vw, (min-width: 768px) 80vw, 100vw"
+              />
+            ))}
+            <img
+              src={coverUrl}
+              loading="lazy"
+              decoding="async"
+              alt={caption || title}
+              style={style}
+            />
+          </picture>
+        );
+      }
+    }
+    const src = mapImageUrl(value.properties.source[0][0], block);
+
+    let thumbnails: ThumbnailValueType[] = [];
 
     const blockWidth = value.format?.block_width;
 
@@ -84,7 +114,7 @@ const Asset: React.FC<{
         />
         <img
           src={thumbnails[0].src}
-          alt={caption}
+          alt={caption || title}
           loading="lazy"
           decoding="async"
           style={style}
